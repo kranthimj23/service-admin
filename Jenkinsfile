@@ -8,7 +8,7 @@ pipeline {
         PROJECT_ID = 'devops-ai-labs-1'
         CLUSTER = 'demo-gke-cluster'
         ZONE = 'asia-south1'
-        GCP_KEY = 'C:\Users\himan\Downloads\devops-ai-labs-1-3d333cbd19fe.json'
+        GCP_KEY = 'C:\\Users\\himan\\Downloads\\devops-ai-labs-1-3d333cbd19fe.json'
         PYTHON_EXEC = 'C:\\Users\\himan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
         GIT_CREDENTIALS_ID = credentials('Jenkins-Generic')
     }
