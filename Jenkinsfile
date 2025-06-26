@@ -10,19 +10,26 @@ pipeline {
         ZONE = 'asia-south1'
         GCP_KEY = 'C:\\Users\\himan\\Downloads\\devops-ai-labs-1-3d333cbd19fe.json'
         PYTHON_EXEC = 'C:\\Users\\himan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
-        GIT_CREDENTIALS_ID = credentials('Jenkins-Generic')
+        GIT_CREDENTIALS_ID = credentials('Jenkins-cred-new')
     }
 
     stages {
  
-        stage('Checkout') {
- 
+       stage('Checkout with credentials') {
             steps {
- 
-                checkout scm
- 
+                deleteDir()
+                script {
+                    withCredentials([string(credentialsId: 'Jenkins-cred-new', variable: 'GIT_TOKEN')]) {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "*/dev"]],
+                            userRemoteConfigs: [[
+                                url: "https://${GIT_TOKEN}@github.com/kranthimj23/service-admin.git"
+                            ]]
+                        ])
+                    }
+                }
             }
- 
         }
 
         stage('Authenticate with GCP') {
@@ -53,7 +60,7 @@ pipeline {
         stage('Deploy to GKE') {
             steps {
                 bat """
-                    gcloud container clusters get-credentials ${env.CLUSTER} --zone ${env.ZONE} --project ${env.PROJECT_ID}
+                    gcloud container clusters get-credentials ${env.CLUSTER} --region ${env.ZONE} --project ${env.PROJECT_ID}
                 """
 
                 configFileProvider([configFile(fileId: 'deploy_to_gke', targetLocation: 'deploy_to_gke.py')]) {
