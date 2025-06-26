@@ -5,10 +5,10 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = 'bamboo-diode-456912-p9'
-        CLUSTER = 'autopilot-cluster-1'
+        PROJECT_ID = 'devops-ai-labs-1'
+        CLUSTER = 'demo-gke-cluster'
         ZONE = 'asia-south1'
-        GCP_KEY = 'C:\\Users\\himan\\Downloads\\devops-lab-ci\\flask-gke-helm\\jenkins-sa-key.json'   
+        GCP_KEY = 'C:\Users\himan\Downloads\devops-ai-labs-1-3d333cbd19fe.json'
         PYTHON_EXEC = 'C:\\Users\\himan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
         GIT_CREDENTIALS_ID = credentials('Jenkins-Generic')
     }
