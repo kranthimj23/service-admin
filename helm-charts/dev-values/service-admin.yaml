@@ -1,12 +1,8 @@
-
-replicaCount: 2
 image:
-  repository: gcr.io/zdt-demo/service-admin
-  tag: latest
   pullPolicy: IfNotPresent
-service:
-  type: ClusterIP
-  port: 8080
+  repository: asia-south1-docker.pkg.dev/devops-ai-labs-1/service-admin/admin
+  tag: 2-dev
+replicaCount: 2
 resources:
   limits:
     cpu: 500m
@@ -14,3 +10,6 @@ resources:
   requests:
     cpu: 200m
     memory: 256Mi
+service:
+  port: 8080
+  type: ClusterIP
