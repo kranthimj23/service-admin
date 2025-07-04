@@ -5,32 +5,42 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = 'bamboo-diode-456912-p9'
+        PROJECT_ID = 'devops-ai-labs-1'
         CLUSTER = 'autopilot-cluster-1'
         ZONE = 'asia-south1'
-        GCP_KEY = 'C:\\Users\\himan\\Downloads\\devops-lab-ci\\flask-gke-helm\\jenkins-sa-key.json'   
-        PYTHON_EXEC = 'C:\\Users\\himan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
-        GIT_CREDENTIALS_ID = credentials('Jenkins-Generic')
+        
+        // Update this path if your key is stored elsewhere
+        GCP_KEY = '/var/lib/jenkins/keys/devops-ai-labs-1-ffe9cbe45593.json'
+        
+        PYTHON_EXEC = 'python3.12'
+        GIT_CREDENTIALS_ID = credentials('jenkins-token')
     }
 
     stages {
- 
-        stage('Checkout') {
- 
+        stage('Checkout with credentials') {
             steps {
- 
-                checkout scm
- 
+                deleteDir()
+                script {
+                    withCredentials([string(credentialsId: 'jenkins-token', variable: 'GIT_TOKEN')]) {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "*/dev"]],
+                            userRemoteConfigs: [[
+                                url: "https://${GIT_TOKEN}@github.com/kranthimj23/service-admin.git"
+                            ]]
+                        ])
+                    }
+                }
             }
- 
         }
-
+        
         stage('Authenticate with GCP') {
             steps {
-                bat """
-                    gcloud auth activate-service-account --key-file="${env.GCP_KEY}"
-                    gcloud config set project ${env.PROJECT_ID}
+                sh """
+                    gcloud auth activate-service-account --key-file="${GCP_KEY}"
+                    gcloud config set project ${PROJECT_ID}
                     gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
+                    gcloud auth list
                 """
             }
         }
@@ -39,11 +49,17 @@ pipeline {
             steps {
                 script {
                     image_repo = "asia-south1-docker.pkg.dev/${env.PROJECT_ID}/service-admin/admin"
-                    image_tag = "${BUILD_NUMBER}-${env.env_namespace}"
+                    image_tag = "${BUILD_NUMBER}-${env.env_namespace ?: 'dev'}" // fallback if env_namespace not set
                     def image_full = "${image_repo}:${image_tag}"
 
-                    bat """
+                    sh """
+                        echo 'Logging in to Artifact Registry...'
+                        gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://asia-south1-docker.pkg.dev
+
+                        echo 'Building Docker image...'
                         docker build -t ${image_full} .
+
+                        echo 'Pushing Docker image...'
                         docker push ${image_full}
                     """
                 }
@@ -52,26 +68,27 @@ pipeline {
 
         stage('Deploy to GKE') {
             steps {
-                bat """
-                    gcloud container clusters get-credentials ${env.CLUSTER} --zone ${env.ZONE} --project ${env.PROJECT_ID}
+                sh """
+                    gcloud container clusters get-credentials ${CLUSTER} --zone ${ZONE} --project ${PROJECT_ID}
                 """
 
                 configFileProvider([configFile(fileId: 'deploy_to_gke', targetLocation: 'deploy_to_gke.py')]) {
-                     script {
+                    withCredentials([string(credentialsId: 'jenkins-token', variable: 'GIT_TOKEN')]) {
+                        script {
                             def pythonCommand = """
-                                set CLUSTER=${env.CLUSTER}
-                                set ZONE=${env.ZONE}
-                                set PROJECT_ID=${env.PROJECT_ID}
+                                export CLUSTER=${CLUSTER}
+                                export ZONE=${ZONE}
+                                export PROJECT_ID=${PROJECT_ID}
                                 echo Running Python script...
-                                ${env.PYTHON_EXEC} deploy_to_gke.py ${env.env_namespace} ${image_repo} ${image_tag} ${env.github_url}
+                                ${PYTHON_EXEC} deploy_to_gke.py ${env.env_namespace ?: 'dev'} ${image_repo} ${image_tag} ${env.github_url} ${env.microservice}
                             """
-                        
+    
                             echo "Executing Python Deployment Script..."
-                        
-                            def result = bat(script: pythonCommand, returnStdout: true).trim()
+    
+                            def result = sh(script: pythonCommand, returnStdout: true).trim()
                             echo "Deployment Output:\n${result}"
                         }
-
+                    }
                 }
             }
         }

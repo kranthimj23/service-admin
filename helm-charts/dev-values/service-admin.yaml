@@ -1,0 +1,15 @@
+image:
+  pullPolicy: IfNotPresent
+  repository: asia-south1-docker.pkg.dev/devops-ai-labs-1/service-admin/admin
+  tag: 2-dev
+replicaCount: 2
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+service:
+  port: 8080
+  type: ClusterIP
