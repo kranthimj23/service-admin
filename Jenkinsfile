@@ -5,14 +5,14 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = 'devops-ai-labs-1'
+        PROJECT_ID = 'nice-virtue-463917-m0'
         CLUSTER = 'autopilot-cluster-1'
         ZONE = 'asia-south1'
         
         // Update this path if your key is stored elsewhere
-        GCP_KEY = '/var/lib/jenkins/keys/devops-ai-labs-1-ffe9cbe45593.json'
+        GCP_KEY = '/var/lib/jenkins/keys/nice-virtue-463917-m0-b7c626c7348c.json'
         
-        PYTHON_EXEC = 'python3.12'
+        PYTHON_EXEC = 'python3.11'
         GIT_CREDENTIALS_ID = credentials('jenkins-token')
     }
 
