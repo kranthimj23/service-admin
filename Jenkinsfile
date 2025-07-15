@@ -4,12 +4,6 @@ def image_tag = ''
 pipeline {
     agent any
 
-def image_repo = ''
-def image_tag = ''
-
-pipeline {
-    agent any
-
     environment {
         PROJECT_ID = 'nice-virtue-463917-m0'
         CLUSTER = 'autopilot-cluster-1'
