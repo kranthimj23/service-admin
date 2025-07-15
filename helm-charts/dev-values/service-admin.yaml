@@ -1,7 +1,7 @@
 image:
   pullPolicy: IfNotPresent
-  repository: asia-south1-docker.pkg.dev/devops-ai-labs-1/service-admin/admin
-  tag: 5-dev
+  repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
+  tag: 6-dev
 replicaCount: 3
 resources:
   limits:
