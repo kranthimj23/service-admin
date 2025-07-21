@@ -9,11 +9,11 @@ env:
 image:
   pullPolicy: IfNotPresent
   repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
-  tag: 11-dev
+  tag: 12-dev
 replicaCount: 1
 resources:
   limits:
-    cpu: 100m
+    cpu: 150m
     memory: 512Mi
   requests:
     cpu: 250m
