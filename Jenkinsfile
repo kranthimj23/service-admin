@@ -7,7 +7,7 @@ pipeline {
     environment {
         PROJECT_ID = 'nice-virtue-463917-m0'
         CLUSTER = 'autopilot-cluster-1'
-        ZONE = 'asia-south1'
+        ZONE = 'asia-southeast1'
         
         // Update this path if your key is stored elsewhere
         GCP_KEY = '/var/lib/jenkins/keys/nice-virtue-463917-m0-b7c626c7348c.json'
