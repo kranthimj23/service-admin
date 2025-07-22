@@ -4,17 +4,21 @@ env:
     value: value1
   - name: key2
     value: value2
+  - name: key3
+    value: value3
+  - name: key4
+    value: value4
 image:
   pullPolicy: IfNotPresent
   repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
-  tag: 13-dev
+  tag: 14-dev
 replicaCount: 1
 resources:
   limits:
     cpu: 150m
     memory: 512Mi
   requests:
-    cpu: 250m
+    cpu: 200m
     memory: 256Mi
 service:
   port: 8080
