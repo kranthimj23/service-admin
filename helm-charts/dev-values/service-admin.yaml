@@ -4,12 +4,10 @@ env:
     value: value1
   - name: key2
     value: value2
-  - name: key3
-    value: value3
 image:
   pullPolicy: IfNotPresent
   repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
-  tag: 12-dev
+  tag: 13-dev
 replicaCount: 1
 resources:
   limits:
