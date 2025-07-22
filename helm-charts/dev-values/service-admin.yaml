@@ -14,7 +14,7 @@ resources:
     cpu: 150m
     memory: 512Mi
   requests:
-    cpu: 250m
+    cpu: 200m
     memory: 256Mi
 service:
   port: 8080
