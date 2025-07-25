@@ -10,7 +10,7 @@ env:
     value: value4
 image:
   pullPolicy: IfNotPresent
-  repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
+  repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin:6.3.0-b14-release-r6.0.0-v1
   tag: 14-dev
 replicaCount: 1
 resources:
