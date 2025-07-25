@@ -9,6 +9,7 @@ env:
   - name: key4
     value: value4
 image:
+  imageName: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin:14-dev
   pullPolicy: IfNotPresent
   repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
   tag: 14-dev
