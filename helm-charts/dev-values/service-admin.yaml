@@ -1,7 +1,7 @@
 # JIRA LINK1: https://jira.qwerty.com/browse/PDE-1234
 # JIRA LINK2: https://jira.qwerty.com/browse/PDE-22341 
 # JIRA LINK3: https://jira.qwerty.com/browse/PDE-445678 
-# EPIC: 345678 
+# EPIC: mb-securelock
 # JIRA Ticket IDs: 345678, 323256
 
 env:
