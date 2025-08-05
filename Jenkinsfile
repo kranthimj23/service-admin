@@ -14,7 +14,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout service-user repo') {
+        stage('Checkout service-admin repo') {
             steps {
                 deleteDir()
                 script {
