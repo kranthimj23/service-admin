@@ -5,9 +5,9 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = 'nice-virtue-463917-m0'
+        PROJECT_ID = 'mobile-app-1-482109'
         CLUSTER = 'autopilot-cluster-1'
-        ZONE = 'asia-southeast1'
+        ZONE = 'us-central1'
         GCP_KEY = '/var/lib/jenkins/keys/nice-virtue-463917-m0-b7c626c7348c.json'
         PYTHON_EXEC = 'python3.11'
         GIT_CREDENTIALS_ID = credentials('jenkins-token')
