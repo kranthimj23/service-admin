@@ -9,10 +9,10 @@ env:
   - name: key4
     value: value4
 image:
-  imageName: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin:18-dev
+  imageName: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin:32-dev
   pullPolicy: IfNotPresent
-  repository: asia-south1-docker.pkg.dev/nice-virtue-463917-m0/service-admin/admin
-  tag: 18-dev
+  repository: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin
+  tag: 32-dev
 replicaCount: 1
 resources:
   limits:
