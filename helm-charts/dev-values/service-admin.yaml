@@ -1,9 +1,3 @@
-# JIRA LINK1: https://jira.qwerty.com/browse/PDE-1234
-# JIRA LINK2: https://jira.qwerty.com/browse/PDE-22341 
-# JIRA LINK3: https://jira.qwerty.com/browse/PDE-445678 
-# EPIC: mb-securelock
-# JIRA Ticket IDs: 345678, 323256
-
 env:
   service_admin:
   - name: key1
@@ -15,10 +9,10 @@ env:
   - name: name
     value: Raj
 image:
-  imageName: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin:35-dev
+  imageName: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin:47-dev
   pullPolicy: IfNotPresent
   repository: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin
-  tag: 35-dev
+  tag: 47-dev
 replicaCount: 1
 resources:
   limits:
