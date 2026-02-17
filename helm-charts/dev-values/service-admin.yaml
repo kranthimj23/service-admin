@@ -6,7 +6,7 @@ env:
     value: value2
   - name: name
     value: Nandini
-   - name: key3
+  - name: key3
     value: value3
   
 image:
