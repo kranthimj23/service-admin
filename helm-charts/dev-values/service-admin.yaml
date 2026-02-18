@@ -1,13 +1,13 @@
 env:
   service_admin:
-  - name: key1
-    value: value1
   - name: key2
     value: value2
   - name: name
     value: Krishna
   - name: key4
     value: value4
+  - name: key6
+    value: value6
 image:
   imageName: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin:47-dev
   pullPolicy: IfNotPresent
