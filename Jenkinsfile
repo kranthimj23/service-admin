@@ -12,6 +12,26 @@ pipeline {
     }
 
     stages {
+        stage('Prepare Agent Tools') {
+            steps {
+                script {
+                    echo "Checking and installing missing tools (Docker, venv)..."
+                    sh """
+                        # Install Python venv
+                        sudo apt-get update && sudo apt-get install -y python3.11-venv
+                        
+                        # Install Docker if missing
+                        if ! command -v docker &> /dev/null; then
+                            echo "Docker not found, installing..."
+                            sudo apt-get install -y docker.io
+                            # Attempting to add current user to docker group (may require logout/re-login to take effect)
+                            sudo usermod -aG docker \$USER || true
+                        fi
+                    """
+                }
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 echo "Checking out service-admin onto node: ${env.NODE_NAME}"
@@ -22,11 +42,7 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 script {
-                    echo "Installing missing venv package..."
-                    // This one-time command fixes the error
-                    sh 'sudo -n apt install python3.11-venv -y'
-                    
-                    echo "Initializing virtual environment..."
+                    echo "Initializing virtual environment and running tests..."
                     sh """
                         python3 -m venv .venv
                         . .venv/bin/activate
