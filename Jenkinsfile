@@ -61,19 +61,26 @@ pipeline {
                     def gitSha = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     def imageFull = "${IMAGE_URI}:${gitSha}"
                     
-                    echo "Building and Pushing Docker image: ${imageFull}"
-                    
-                    sh """
-                        # Authenticate Docker to Artifact Registry
-                        gcloud auth configure-docker ${REGION}-docker.pkg.dev --quiet
+                    // Using specifically the 'gcp-sa-key' you mentioned earlier
+                    withCredentials([file(credentialsId: 'gcp-sa', variable: 'GCP_KEY_FILE')]) {
+                        echo "Authenticating and Pushing Docker image: ${imageFull}"
                         
-                        # Build the image from current directory
-                        docker build -t ${imageFull} -t ${IMAGE_URI}:latest .
-                        
-                        # Push to Google Cloud Artifact Registry
-                        docker push ${imageFull}
-                        docker push ${IMAGE_URI}:latest
-                    """
+                        sh """
+                            # Activate service account
+                            gcloud auth activate-service-account --key-file=\$GCP_KEY_FILE
+                            gcloud config set project ${env.PROJECT_ID}
+                            
+                            # Log in to Artifact Registry
+                            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://${env.REGION}-docker.pkg.dev
+                            
+                            # Build the image
+                            docker build -t ${imageFull} -t ${IMAGE_URI}:latest .
+                            
+                            # Push to Google Cloud Artifact Registry
+                            docker push ${imageFull}
+                            docker push ${IMAGE_URI}:latest
+                        """
+                    }
                 }
             }
         }
