@@ -9,10 +9,10 @@ env:
   - name: key7
     value: value7
 image:
-  imageName: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin:47-dev
+  imageName: us-central1-docker.pkg.dev/garudaone20/garuda-docker/service-admin:latest
   pullPolicy: IfNotPresent
-  repository: us-central1-docker.pkg.dev/mobile-app-1-482109/service-admin/admin
-  tag: 47-dev
+  repository: us-central1-docker.pkg.dev/garudaone20/garuda-docker/service-admin
+  tag: latest
 replicaCount: 1
 resources:
   limits:
@@ -22,6 +22,6 @@ resources:
     cpu: 200m
     memory: 256Mi
 service:
-  port: 8080
+  port: 9090
   type: ClusterIP
 serviceName: service-admin
