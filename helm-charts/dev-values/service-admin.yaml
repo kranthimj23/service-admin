@@ -10,7 +10,7 @@ env:
     value: value7
 image:
   imageName: us-central1-docker.pkg.dev/garudaone20/garuda-docker/service-admin:latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   repository: us-central1-docker.pkg.dev/garudaone20/garuda-docker/service-admin
   tag: latest
 replicaCount: 1
