@@ -22,17 +22,21 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 script {
-                    echo "Initializing virtual environment and running tests..."
+                    echo "Installing missing venv package..."
+                    // This one-time command fixes the error
+                    sh 'sudo -n apt install python3.11-venv -y'
+                    
+                    echo "Initializing virtual environment..."
                     sh """
                         python3 -m venv .venv
                         . .venv/bin/activate
                         pip install -r requirements.txt
-                        # Verifying application imports
                         python3 -c "import flask; print('Flask imported successfully')"
                     """
                 }
             }
         }
+
 
         stage('Build & Push Image') {
             steps {
