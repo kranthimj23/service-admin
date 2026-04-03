@@ -16,10 +16,10 @@ image:
 replicaCount: 1
 resources:
   limits:
-    cpu: 150m
+    cpu: 250m
     memory: 512Mi
   requests:
-    cpu: 200m
+    cpu: 100m
     memory: 256Mi
 service:
   port: 9090
