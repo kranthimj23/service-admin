@@ -1,13 +1,11 @@
 env:
   service_admin:
-  - name: key2
-    value: value2
-  - name: key4
-    value: value4
-  - name: key6
-    value: value6
-  - name: key7
-    value: value7
+  - name: key1
+    value: value1
+  - name: key3
+    value: value3
+  - name: key5
+    value: value5
 image:
   imageName: us-central1-docker.pkg.dev/garudaone20/garuda-docker/service-admin:latest
   pullPolicy: Always
